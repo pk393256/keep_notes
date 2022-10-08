@@ -1,6 +1,7 @@
+// const { timeStamp } = require('console');
 const mongoose = require('mongoose');
 
-const postSchema = new mongoose.Schema({
+const taskSchema = new mongoose.Schema({
     title:{
         type:String,
         required:true
@@ -9,7 +10,10 @@ const postSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    belongsTo:{
+    belongsToUser:{
         type:mongoose.Types.ObjectId ,ref:"User"
     }
-})
+},{timestamps:true});
+
+const taskModel = mongoose.taskSchema('Task',taskSchema)
+module.exports = taskModel;
