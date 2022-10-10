@@ -17,3 +17,10 @@ connectDatabase().then(()=>{
         console.log('connection running at port '+PORT)
     })
 })
+
+async function dataForVerification(req,res){
+
+    req.context ={
+        
+    }
+}

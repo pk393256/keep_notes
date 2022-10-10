@@ -48,6 +48,7 @@ async function getAllUser(req,res){
 }
 
 
+
 module.exports = {
     createUser,
     getAllUser,
