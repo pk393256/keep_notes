@@ -1,11 +1,16 @@
 const express = require('express');
 const { connectDatabase } = require('./databse/index');
-const app = express();
 const router = require('./router/index');
+const auth = require('./authorization/auth')
+const cors = require('cors')
+const app = express();
+app.use(cors())
 app.use(express.json());
 const dotenv = require('dotenv')
 dotenv.config()
+app.use(dataForVerification)
 app.use(router)
+
 
 
 
@@ -18,9 +23,10 @@ connectDatabase().then(()=>{
     })
 })
 
-async function dataForVerification(req,res){
+async function dataForVerification(req,res,next){
 
     req.context ={
-        
+
     }
+    next()
 }
