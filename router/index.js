@@ -1,7 +1,7 @@
 const express = require('express');
 const { auth } = require('../authorization/auth');
 const { login } = require('../handler/login');
-const { createNote, getAllUserNote, getAllUserNotePopulate } = require('../handler/note');
+const { createNote, getAllUserNote, getAllUserNotePopulate, deleteUserNote } = require('../handler/note');
 const { createUser, getAllUser } = require('../handler/user');
 const app = express();
 const router = express.Router();
@@ -12,5 +12,6 @@ router.post('/login',login);
 router.get('/note',auth,getAllUserNote)
 router.post('/note',auth,createNote);
 router.get('/notePopulate',auth,getAllUserNotePopulate)
+router.delete('/note/:_id',auth,deleteUserNote)
 
 module.exports = router;

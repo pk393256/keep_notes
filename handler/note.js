@@ -49,9 +49,31 @@ async function createNote(req,res){
     }
 }
 
+async function deleteUserNote(req,res){
+    let {_id} = req.params;
+    let belongsToUser = req.context.user[0]._id;
+    console.log('query id',req.params);
+    try {
+        
+        let ifPresentAndDeleted = await taskModel.deleteOne({_id,belongsToUser});
+        console.log('ifPresent',ifPresentAndDeleted)
+        if(ifPresentAndDeleted.deletedCount!=0){
+        res.send({status:'User note deleted'})
+        return
+        }else{
+            res.send({status:'This Note doesnt belongs to you'})
+        }
+    } catch (error) {
+        res.send({status:'error occured during delete request'});
+        return;
+    }
+}
+
 module.exports = {
     getAllUserNote,
     createNote,
-    getAllUserNotePopulate
+    getAllUserNotePopulate,
+    deleteUserNote
+
 
 }
