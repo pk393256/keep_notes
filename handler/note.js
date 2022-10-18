@@ -39,13 +39,46 @@ async function createNote(req,res){
     let noteToBeCreated = req.body; 
     console.log(req.context.user)
     let belongsToUser = mongoose.Types.ObjectId(req.context.user[0]._id);
-
+    try {
+        let title = noteToBeCreated.title;
+        let ifTaskPresent = await taskModel.find({title})
+        if(ifTaskPresent.length!=0){
+            res.send({status:'task already present'})
+            return
+        }
+    } catch (error) {
+        res.send({status:'error occured during fetching task to check if it is already present or not'})
+        return
+    }
     try {
         await taskModel.create({...noteToBeCreated,belongsToUser})
         res.send({status:'Note created'})
 
     } catch (error) {
         res.send({status:'error occured during creating note'})
+    }
+}
+
+async function updateUserNote(req,res){
+    let {_id} = req.params;
+    let belongsToUser = req.context.user[0]._id;
+    let {workStatus} = req.body;
+    console.log('workStatus',workStatus)
+
+    try {
+        let ifPresentUpdate = await taskModel.findOneAndUpdate({_id,belongsToUser},{workStatus});
+        console.log('ifPresentUpdate',ifPresentUpdate)
+        if(ifPresentUpdate){
+            res.send({status:'Note has been updated'})
+            return
+        }else{
+            res.send({status:'Note does not exist'})
+            return
+        }
+        // if(ifPresentUpdate.updateCount)
+    } catch (error) {
+        res.send({status:'error occured during update request'});
+        return 
     }
 }
 
@@ -56,7 +89,7 @@ async function deleteUserNote(req,res){
     try {
         
         let ifPresentAndDeleted = await taskModel.deleteOne({_id,belongsToUser});
-        console.log('ifPresent',ifPresentAndDeleted)
+        // console.log('ifPresent',ifPresentAndDeleted)
         if(ifPresentAndDeleted.deletedCount!=0){
         res.send({status:'User note deleted'})
         return
@@ -73,7 +106,8 @@ module.exports = {
     getAllUserNote,
     createNote,
     getAllUserNotePopulate,
-    deleteUserNote
+    deleteUserNote,
+    updateUserNote,
 
 
 }
