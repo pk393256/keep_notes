@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config();
-const DBUri = process.env.DBUri || 'mongodb://localhost:27017/Note';
-
+const DBUri = process.env.DBUri 
+// || 'mongodb://localhost:27017/Note';
 async function connectDatabase(){
 
     try{
