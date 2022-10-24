@@ -15,7 +15,7 @@ app.use(router)
 
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT ;
 // app.listen()
 connectDatabase().then(()=>{
     app.listen(PORT,()=>{
