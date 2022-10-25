@@ -7,8 +7,8 @@ const app = express();
 const router = express.Router();
 
 router.post('/user',createUser);
-router.get('/',getAllUser);
-router.post('/login',login);
+router.get('/user',getAllUser);
+router.post('/',login);
 router.get('/note',auth,getAllUserNote)
 router.post('/note',auth,createNote);
 router.get('/notePopulate',auth,getAllUserNotePopulate)
