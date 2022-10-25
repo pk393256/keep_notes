@@ -15,10 +15,10 @@ app.use(router)
 
 
 
-var PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 // app.listen()
 connectDatabase().then(()=>{
-    app.listen(process.env.PORT,()=>{
+    app.listen(PORT,()=>{
         console.log('connection running at port '+PORT)
     })
 })
