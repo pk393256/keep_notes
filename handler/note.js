@@ -41,7 +41,7 @@ async function createNote(req,res){
     let belongsToUser = mongoose.Types.ObjectId(req.context.user[0]._id);
     try {
         let title = noteToBeCreated.title;
-        let ifTaskPresent = await taskModel.find({title})
+        let ifTaskPresent = await taskModel.find({title,belongsToUser})
         if(ifTaskPresent.length!=0){
             res.send({status:'task already present'})
             return
